@@ -27,7 +27,6 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec terminal
-bindsym $mod+Return exec konsole
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -65,7 +64,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec waterfox
+bindsym $mod+F2 exec firefox-developer
 #bindsym $mod+F3 exec pcmanfm
 bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
@@ -223,6 +222,8 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 
+for_window [class="konsole" title="floating — Konsole"] floating enable border pixel 10
+
 # switch to workspace with urgent window automatically
 # for_window [urgent=latest] focus
 
@@ -236,7 +237,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Set shut down, restart and locking features
-bindsym $mod+0 exec --no-startup-id ~/.config/polybar/bottombar.sh
+bindsym $mod+0 exec --no-startup-id ~/.config/polybar/modes.sh 1
 # bindsym $mod+0 exec --no-startup-id polybar bottom; exec --no-startup-id sh-c 'i3-msg mode "$mode_system"'
 set $mode_system [l]ogout | [p]ower | [r]eboot
 mode "$mode_system" {
@@ -244,29 +245,30 @@ mode "$mode_system" {
     bindsym r exec --no-startup-id i3exit reboot, mode "default"; exec --no-startup-id pkill -n polybar
     bindsym p exec --no-startup-id i3exit shutdown, mode "default"; exec --no-startup-id pkill -n polybar
 
+    bindsym Print exec --no-startup-id i3-scrot
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"; exec --no-startup-id pkill -n polybar
     bindsym Escape mode "default"; exec --no-startup-id pkill -n polybar
 }
 
 # Resize window (you can also use the mouse for that)
-bindsym $mod+r exec --no-startup-id ~/.config/polybar/resizebar.sh
+bindsym $mod+r exec --no-startup-id ~/.config/polybar/modes.sh 2
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
         # Pressing left will shrink the window’s width.
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt; exec --no-startup-id pkill -n polybar
-        bindsym k resize grow height 5 px or 5 ppt; exec --no-startup-id pkill -n polybar
-        bindsym l resize shrink height 5 px or 5 ppt; exec --no-startup-id pkill -n polybar
-        bindsym semicolon resize grow width 5 px or 5 ppt; exec --no-startup-id pkill -n polybar
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt; exec --no-startup-id pkill -n polybar
-        bindsym Down resize grow height 10 px or 10 ppt; exec --no-startup-id pkill -n polybar
-        bindsym Up resize shrink height 10 px or 10 ppt; exec --no-startup-id pkill -n polybar
-        bindsym Right resize grow width 10 px or 10 ppt; exec --no-startup-id pkill -n polybar
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
         # exit resize mode: Enter or Escape
         bindsym Return mode "default"; exec --no-startup-id pkill -n polybar
@@ -484,17 +486,26 @@ mode "$mode_gaps_outer" {
 exec_always --no-startup-id feh --bg-fill ~/Pictures/wallhaven-173189.png
 
 #for_window [class="Waterfox"] move to workspace $ws2
-assign [class="Waterfox"] $ws2
+assign [class="Firefox Developer Edition"] $ws2
 for_window [class="Spotify"] move to workspace $ws3
 #assign [class="Spotify"] $ws3
 
 exec --no-startup-id "i3-msg 'workspace $ws1; append_layout ~/.config/i3/ws1.json'"
 
 exec --no-startup-id blockify
-exec --no-startup-id waterfox
+exec --no-startup-id firefox-developer
 exec --no-startup-id konsole
 exec --no-startup-id sh -c 'sleep 2; konsole -e 'ranger''
 exec --no-startup-id sh -c 'sleep 4; konsole -e 'htop''
+
+exec --no-startup-id xss-lock -- /opt/1-SCRIPTS/customlock&
+
+bindsym $mod+Return exec --no-startup-id konsole
+bindsym $mod+shift+Return exec --no-startup-id konsole -p Name="floating" -p TerminalColumns=90 -p TerminalRows=18; exec --no-startup-id ~/.config/i3/mover.sh
+
+bindsym $mod+shift+w exec --no-startup-id firefox-developer
+
+bindsym $mod+Tab focus mode_toggle
 
 #workspace 2 gaps inner 0
 #workspace 2 gaps outer 0
