@@ -1,0 +1,40 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#PanelUI-menu-button {display: none!important;}
+
+.urlbar-history-dropmarker {display: none!important;}
+.urlbar-page-action {display: none!important;}
+
+.tab-line[selected=true] {
+  background-color: #00000000!important;}
+.tab-line:not([selected=true]) {
+  background-color: #00000000!important;}
+
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true]) {
+  background-color: #00000000!important;
+}
+
+#toolbar-menubar:not([autohide=true]) + #TabsToolbar > #tabbrowser-tabs > .tabbrowser-tab > .tab-stack > .tab-background,
+:root:not([tabsintitlebar]) .tab-background,
+:root[extradragspace] .tab-background {
+  border-top-style: none!important;
+}
+
+#TabsToolbar .toolbarbutton-1, .tabbrowser-arrowscrollbox > .scrollbutton-up, .tabbrowser-arrowscrollbox > .scrollbutton-down {
+    display: none!important;
+}
+
+.tab-close-button:not([selected]) {
+    display: none!important;
+}
+
+.tabbrowser-tab::after, .tabbrowser-tab::before {
+    border-left: none!important;
+}
+
+/*
+.tab-icon-image:not([selected]) {
+    display: none!important;
+}
+*/
+
